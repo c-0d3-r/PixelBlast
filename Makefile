@@ -10,7 +10,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++17
 
 # Output executable
-TARGET = gameengine
+TARGET = engine
 
 # Source files
 SRCS = $(wildcard src/*.cpp)
