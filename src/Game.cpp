@@ -8,6 +8,7 @@
 Game::Game()
 {
   std::cout << "Game constructor called" << std::endl;
+  isRunning = false;
 }
 Game::~Game()
 {
@@ -52,9 +53,47 @@ void Game::Initialize()
     std::cerr << "Error creating renderer" << std::endl;
   }
 
+  isRunning = true;
+
   return;
 }
-void Game::Render() {}
-void Game::Run() {}
+void Game::Render()
+{
+  // main color
+  SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+  // clrer screen
+  SDL_RenderClear(renderer);
+  // TODO: Render all game objects
+  // present renderer in the display
+  SDL_RenderPresent(renderer);
+}
+void Game::Run()
+{
+  while (isRunning)
+  {
+    ProcessInput();
+    Update();
+    Render();
+  }
+}
 void Game::Update() {}
-void Game::ProcessInput() {}
+void Game::ProcessInput()
+{
+  SDL_Event event;
+
+  while (SDL_PollEvent(&event))
+  {
+    switch (event.type)
+    {
+    case SDL_QUIT:
+      isRunning = false;
+      break;
+    case SDL_KEYDOWN:
+      if (event.key.keysym.sym == SDLK_ESCAPE)
+      {
+        isRunning = false;
+      }
+      break;
+    }
+  }
+}
